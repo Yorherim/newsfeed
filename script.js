@@ -284,22 +284,88 @@ const smallNewsTemplate = document.querySelector("#small-news-item");
 const mainNewsContainer = document.querySelector(".articles__big-column");
 const smallNewsContainer = document.querySelector(".articles__small-column");
 
-mainNews.forEach((item) => {
-  const copyTemplate = mainNewsTemplate.content.cloneNode(true);
-  const category = data.categories.find(
+// <article className="main-article">
+//   <div className="main-article__image-container">
+//     <img
+//       src="images/image1.jpg"
+//       alt="photo of new"
+//       className="main-article__image"
+//     />
+//   </div>
+//   <div className="main-article__content">
+//           <span className="main-article__category article-category"
+//           >технологии</span
+//           >
+//     <h2 className="main-article__title">
+//       Отец жанра. Как уже забытый трип-хоп определяет самую популяр…
+//     </h2>
+//     <p className="main-article__text">
+//       Новая мода на топовые наряды необычных цветов. В сезоне – топики,
+//       шорты-боксеры, сланцы и сандалии. А также большие солнечные очки и
+//       яркая шляпка.
+//     </p>
+//     <a href="#" className="main-article__source article-link">источник</a>
+//   </div>
+// </article>
+const createMainNewsItem = (item) => {
+  const categoryData = data.categories.find(
     (category) => category.id === item.category_id,
   );
-  const source = data.sources.find((source) => source.id === item.source_id);
+  const sourceData = data.sources.find(
+    (source) => source.id === item.source_id,
+  );
 
-  copyTemplate.querySelector(".main-article__title").innerText = item.title;
-  copyTemplate.querySelector(".main-article__text").innerText =
-    item.description;
-  copyTemplate.querySelector(".main-article__image").src = item.image;
-  copyTemplate.querySelector(".main-article__category").innerText =
-    category.name;
-  copyTemplate.querySelector(".main-article__source").innerText = source.name;
+  const article = document.createElement("article");
+  const imageContainer = document.createElement("div");
+  const image = document.createElement("img");
+  const content = document.createElement("div");
+  const category = document.createElement("span");
+  const title = document.createElement("h2");
+  const text = document.createElement("p");
+  const source = document.createElement("a");
 
-  mainNewsContainer.appendChild(copyTemplate);
+  article.className = "main-article";
+  imageContainer.className = "main-article__image-container";
+  image.className = "main-article__image";
+  content.className = "main-article__content";
+  category.className = "main-article__category article-category";
+  title.className = "main-article__title";
+  text.className = "main-article__text";
+  source.className = "main-article__source article-link";
+
+  image.src = item.image;
+  category.textContent = categoryData.name;
+  title.textContent = item.title;
+  text.textContent = item.description;
+  source.textContent = sourceData.name;
+
+  imageContainer.appendChild(image);
+  content.appendChild(category);
+  content.appendChild(title);
+  content.appendChild(text);
+  content.appendChild(source);
+  article.appendChild(imageContainer);
+  article.appendChild(content);
+
+  return article;
+};
+
+mainNews.forEach((item) => {
+  // const copyTemplate = mainNewsTemplate.content.cloneNode(true);
+  // const category = data.categories.find(
+  //   (category) => category.id === item.category_id,
+  // );
+  // const source = data.sources.find((source) => source.id === item.source_id);
+  //
+  // copyTemplate.querySelector(".main-article__title").innerText = item.title;
+  // copyTemplate.querySelector(".main-article__text").innerText =
+  //   item.description;
+  // copyTemplate.querySelector(".main-article__image").src = item.image;
+  // copyTemplate.querySelector(".main-article__category").innerText =
+  //   category.name;
+  // copyTemplate.querySelector(".main-article__source").innerText = source.name;
+
+  mainNewsContainer.appendChild(createMainNewsItem(item));
 });
 smallNews.forEach((item) => {
   const copyTemplate = smallNewsTemplate.content.cloneNode(true);
