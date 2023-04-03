@@ -346,7 +346,7 @@ smallNews.forEach((item) => {
       </h3>
       <div class="small-article__bottom">
         <span class="small-article__date">${dateData}</span>
-        <a href="#" class="small-article__source article-link">${escapeString(item.title)}</a>
+        <a href="#" class="small-article__source article-link">${escapeString(sourceData.name)}</a>
       </div>
     </article>
   `;
